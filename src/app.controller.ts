@@ -1,17 +1,16 @@
-import { Controller, Get, Post } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Post, Param } from '@nestjs/common';
+import { data } from './dummy.data';
 
 @Controller('report/:type')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
   @Get()
-  getIncomeReport() {
-    return { message: 'this is just report' };
+  getAllIncomeReport(@Param('type') type: string) {
+    return { message: `this returns the type: ${type}` };
   }
 
   @Get(':id')
-  getIncomeReportById() {
-    return { id: 'this is an id' };
+  getIncomeReportById(@Param('id') id: string) {
+    return { id: `this is an ${id}` };
   }
   @Post()
   createReport() {

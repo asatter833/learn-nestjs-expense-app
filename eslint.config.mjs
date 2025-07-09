@@ -24,6 +24,16 @@ export default tseslint.config(
       },
     },
   },
+  (module.exports = {
+    rules: {
+      'prettier/prettier': [
+        'error',
+        {
+          endOfLine: 'auto',
+        },
+      ],
+    },
+  }),
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
