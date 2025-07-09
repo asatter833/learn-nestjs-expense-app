@@ -9,7 +9,6 @@ export class AppController {
   }
   @Get(':type')
   getAllIncomeReport(@Param('type') type: ReportType) {
-    console.log(type);
     return data.report.filter((report) => type == report.type);
   }
 
