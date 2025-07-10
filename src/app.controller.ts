@@ -17,6 +17,7 @@ export class AppController {
   getReportById(@Param('id') id: string) {
     return data.report.filter((res) => res.id == id);
   }
+
   @Post()
   createReport(
     @Body()
