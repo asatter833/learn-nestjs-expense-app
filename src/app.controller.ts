@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Param } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body } from '@nestjs/common';
 import { data, ReportType } from './dummy.data';
+import { v4 as uuid } from 'uuid';
 
 @Controller('report')
 export class AppController {
@@ -17,7 +18,27 @@ export class AppController {
     return data.report.filter((res) => res.id == id);
   }
   @Post()
-  createReport() {
-    return 'item is created';
+  createReport(
+    @Body()
+    {
+      amount,
+      source,
+      type,
+    }: {
+      amount: number;
+      source: string;
+      type: ReportType;
+    },
+  ) {
+    const newReport = {
+      id: uuid(),
+      source,
+      amount,
+      created_at: new Date(),
+      updated_at: new Date(),
+      type,
+    };
+    data.report.push(newReport);
+    return newReport;
   }
 }
