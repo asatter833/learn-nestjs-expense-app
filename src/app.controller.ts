@@ -8,12 +8,12 @@ export class AppController {
   getAllReports() {
     return data.report;
   }
-  @Get(':type')
-  getAllIncomeReport(@Param('type') type: ReportType) {
-    return data.report.filter((report) => type == report.type);
-  }
+  // @Get(':type')
+  // getAllIncomeReport(@Param('type') type: ReportType) {
+  //   return data.report.filter((report) => type == report.type);
+  // }
 
-  @Get('all/:id')
+  @Get(':id')
   getReportById(@Param('id') id: string) {
     return data.report.filter((res) => res.id == id);
   }
