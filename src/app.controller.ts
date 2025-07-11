@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Param, Body, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  Body,
+  Put,
+  NotFoundException,
+} from '@nestjs/common';
 import { data, ReportType } from './dummy.data';
 import { v4 as uuid } from 'uuid';
 
@@ -60,8 +68,12 @@ export class AppController {
     // Find the report object with matching id from data.report array
     const reportToUpdate = data.report.find((r) => id === r.id);
 
-    // If no report was found, return undefined (effectively a 200 with no body—could improve this to throw NotFoundException)
-    if (!reportToUpdate) return;
+    // If no report was found, return not found error
+    if (!reportToUpdate) {
+      throw new NotFoundException(
+        'Report not found. It may have been deleted or does not exist.',
+      );
+    }
 
     // Get the index of the found report in the array
     const returnIndex = data.report.findIndex(
