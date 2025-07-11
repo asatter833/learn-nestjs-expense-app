@@ -6,6 +6,8 @@ import {
   Body,
   Put,
   NotFoundException,
+  Delete,
+  HttpCode,
 } from '@nestjs/common';
 import { data, ReportType } from './dummy.data';
 import { v4 as uuid } from 'uuid';
@@ -83,14 +85,28 @@ export class AppController {
     // Update the report by creating a new object that merges:
     // - all the existing properties of the report
     // - all the new properties from the request body (overwriting any conflicts)
-    console.log(
-      (data.report[returnIndex] = {
-        ...data.report[returnIndex],
-        ...body,
-      }),
-    );
+    data.report[returnIndex] = {
+      ...data.report[returnIndex],
+      ...body,
+    };
 
     // Return the updated report object
     return data.report[returnIndex];
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  deleteReport(@Param('id') id: string) {
+    const reportIndexToDelete = data.report.findIndex((r) => r.id === id);
+    if (reportIndexToDelete === -1) {
+      throw new NotFoundException(
+        'Report not found. It may have been deleted or does not exist.',
+      );
+    }
+    data.report.splice(reportIndexToDelete, 1);
+    return {
+      statusCode: 204,
+      message: 'Report deleted successfully.',
+    };
   }
 }
