@@ -2,7 +2,7 @@ export enum ReportType {
   INCOME = 'income',
   EXPENSE = 'expense',
 }
-interface DataType {
+export interface DataType {
   report: {
     id: string;
     source: string;

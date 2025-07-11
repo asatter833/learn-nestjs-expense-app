@@ -11,21 +11,18 @@ import {
 } from '@nestjs/common';
 import { data, ReportType } from './dummy.data';
 import { v4 as uuid } from 'uuid';
-
+import { AppService } from './app.service';
 @Controller('report')
 export class AppController {
+  constructor(private readonly appService: AppService) {}
   @Get()
   getAllReports() {
-    return data.report;
+    return this.appService.getAllReports();
   }
-  // @Get(':type')
-  // getAllIncomeReport(@Param('type') type: ReportType) {
-  //   return data.report.filter((report) => type == report.type);
-  // }
 
   @Get(':id')
   getReportById(@Param('id') id: string) {
-    return data.report.filter((res) => res.id == id);
+    return this.appService.getReportById(id);
   }
 
   @Post()
