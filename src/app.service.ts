@@ -1,12 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { data, ReportType } from './dummy.data';
 import { v4 as uuid } from 'uuid';
+import { CreateReportDto, UpdateReportDto } from './dtos/report.dto';
 
-export interface ReportBody {
-  amount: number;
-  source: string;
-  type: ReportType;
-}
 @Injectable()
 export class AppService {
   getAllReports() {
@@ -17,7 +13,7 @@ export class AppService {
     return data.report.filter((res) => res.id == id);
   }
 
-  createReport({ amount, source, type }: ReportBody) {
+  createReport({ amount, source, type }: CreateReportDto) {
     const newReport = {
       id: uuid(),
       source,
@@ -30,10 +26,7 @@ export class AppService {
     return newReport;
   }
 
-  updateReport(
-    id: string,
-    body: { amount: number; source: string; type: ReportType },
-  ) {
+  updateReport(id: string, body: UpdateReportDto) {
     const reportToUpdate = data.report.find((r) => id === r.id);
 
     // If no report was found, return not found error

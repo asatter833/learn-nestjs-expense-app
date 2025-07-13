@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { ReportType } from './dummy.data';
 import { AppService } from './app.service';
-import { CreateReportDto } from './dtos/report.dto';
+import { CreateReportDto, UpdateReportDto } from './dtos/report.dto';
 
 @Controller('report')
 export class AppController {
@@ -47,11 +47,7 @@ export class AppController {
 
     // Extracts the request body with expected shape: amount, source, type
     @Body()
-    body: {
-      amount: number;
-      source: string;
-      type: ReportType;
-    },
+    body: UpdateReportDto,
   ) {
     // Find the report object with matching id from data.report array
     return this.appService.updateReport(id, body);
