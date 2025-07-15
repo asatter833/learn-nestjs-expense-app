@@ -7,6 +7,8 @@ import {
   IsEnum,
   IsOptional,
 } from 'class-validator';
+
+import { Exclude, Expose } from 'class-transformer';
 export class CreateReportDto {
   @IsNumber()
   @IsPositive()
@@ -34,4 +36,19 @@ export class UpdateReportDto {
   @IsEnum(ReportType, { message: 'Bad type request' })
   @IsOptional()
   type: ReportType;
+}
+
+export class ReportResponseDto {
+  id: string;
+  amount: number;
+  source: string;
+  type: ReportType;
+  created_at: Date;
+
+  @Expose({ name: 'updatedAt' })
+  updated_at: Date;
+
+  constructor(partial: Partial<ReportResponseDto>) {
+    Object.assign(this, partial);
+  }
 }

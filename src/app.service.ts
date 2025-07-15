@@ -1,16 +1,24 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { data, ReportType } from './dummy.data';
 import { v4 as uuid } from 'uuid';
-import { CreateReportDto, UpdateReportDto } from './dtos/report.dto';
+import {
+  CreateReportDto,
+  ReportResponseDto,
+  UpdateReportDto,
+} from './dtos/report.dto';
 
 @Injectable()
 export class AppService {
-  getAllReports() {
+  getAllReports(): ReportResponseDto[] {
     return data.report;
   }
 
-  getReportById(id: string) {
-    return data.report.filter((res) => res.id == id);
+  getReportById(id: string): ReportResponseDto {
+    const report = data.report.find((res) => res.id == id);
+    if (!report) {
+      throw new NotFoundException('Report not found');
+    }
+    return new ReportResponseDto(report);
   }
 
   createReport({ amount, source, type }: CreateReportDto) {
