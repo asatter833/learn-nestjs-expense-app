@@ -44,7 +44,6 @@ export class ReportResponseDto {
   source: string;
   type: ReportType;
   created_at: Date;
-
   @Expose({ name: 'updatedAt' })
   updated_at: Date;
 

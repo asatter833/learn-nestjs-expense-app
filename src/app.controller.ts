@@ -4,13 +4,13 @@ import {
   Post,
   Param,
   Body,
-  Put,
   Delete,
   HttpCode,
-  ParseIntPipe,
   ParseUUIDPipe,
+  Patch,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import { ReportType } from './dummy.data';
 import { AppService } from './app.service';
 import {
   CreateReportDto,
@@ -44,10 +44,10 @@ export class AppController {
   }
 
   // This decorator makes this handler respond to HTTP PUT requests with a dynamic :id parameter
-  @Put(':id')
+  @Patch(':id')
+  @UsePipes(new ValidationPipe({ whitelist: true })) // you can use ValidationPipe to validate the incoming request body instead of global validation pipe
   updateReport(
     @Param('id', ParseUUIDPipe) id: string,
-
     // Extracts the request body with expected shape: amount, source, type
     @Body()
     body: UpdateReportDto,
